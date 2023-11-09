@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+    <h1 class="center">Iniciar Sesion</h1>
+
+    <form id="Principal" action="/Login" method="post">
+
+        <label for="username">Nombre de Usuario:</label>
+        <input class="inputForm"  type="text" name="username" id="username" required><br>
+
+        <label for="contrasena">Contraseña:</label>
+        <input class="inputForm"  type="password" name="contrasena" id="contrasena" required><br>
+
+
+        <button id="btnLogin" type="submit">Iniciar Sesion</button>
+    </form>
+</body>
+
+<footer>
+    <script src="jquery/jquery.min.js"></script>
+    <script src="js/SesionValidaciones.js"></script>
+</footer>
+
+</html>

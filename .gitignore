@@ -1,0 +1,30 @@
+# Dependencias de Node.js
+node_modules/
+
+# Archivos de registro
+logs/
+*.log
+
+# Archivos generados por el sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración locales
+.env
+
+# Archivos de configuración de usuario para Visual Studio Code
+.vscode/
+
+# Carpetas de compilación
+dist/
+out/
+
+# Dependencias de desarrollo (puede variar según tu proyecto)
+dev-dependencies/
+
+# Archivos de respaldo de editor
+*.bak
+*.swp
+
+
+# Cualquier otra carpeta o archivo específico que quieras excluir

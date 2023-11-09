@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro</title>
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+    <h1 class="center">Registro de Usuarios</h1>
+
+    <form id="Principal" action="/Registrar" method="post">
+        <label for="nombre">Nombre:</label>
+        <input class="inputForm" type="text" name="nombre" id="nombre" required><br>
+
+        <label for="username">Nombre de Usuario:</label>
+        <input class="inputForm"  type="text" name="username" id="username" required><br>
+
+        <label for="contrasena">Contraseña:</label>
+        <input class="inputForm"  type="password" name="contrasena" id="contrasena" required><br>
+
+        <label for="contrasenaR">Confirmar contraseña:</label>
+        <input class="inputForm"  type="passwordT" name="contrasenaR" id="contrasenaR" required><br>
+
+        <button type="submit">Registrar</button>
+    </form>
+</body>
+
+<footer>
+    <script src="jquery/jquery.min.js"></script>
+    <script src="js/SesionValidaciones.js"></script>
+</footer>
+
+</html>

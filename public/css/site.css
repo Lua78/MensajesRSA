@@ -48,3 +48,13 @@ form {
     box-shadow: 0 0 2px 2px rgb(230, 0, 0);
   }
   
+  .row{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+  a{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }

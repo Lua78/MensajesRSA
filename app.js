@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const port = 3000; 
 const morgan = require('morgan');
 const path = require('path');
@@ -14,8 +13,6 @@ app.set('view engine', 'ejs');
 app.use('/js',express.static(path.join(__dirname, 'public/js')));
 app.use('/css',express.static(path.join(__dirname, 'public/css')));
 app.use('/jquery',express.static(path.join(__dirname, 'node_modules/jquery/dist')));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 
 app.use((err, req, res, next) => {

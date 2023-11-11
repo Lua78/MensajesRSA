@@ -1,0 +1,78 @@
+
+#chat-container {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 400px;
+    overflow-y: scroll;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  li:hover {
+    background-color: #ddd;
+  }
+  
+.contenedor{
+    min-height: 400px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+#contacts-container {
+    width: 20%;
+    min-width: 150px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: auto;
+    overflow-y: scroll;
+    flex-direction: column;
+}
+
+
+#message-input {
+    width: 70%;
+    min-height: 30px;
+    padding: 5px;
+}
+
+#send-button {
+    width: 30%;
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.chatConteiner{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+.row{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: auto;
+    overflow-y: scroll;
+  }

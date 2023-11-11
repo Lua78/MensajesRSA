@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat en Línea</title>
+    <link rel="stylesheet" href="/css/chat.css" />
+  </head>
+  <body>
+    <div class="contenedor" >
+      <div id="contacts-container">
+        <h2>Contactos</h2>
+        <ul>
+          <% usuarios.forEach(usuario => { %>
+            <li value="<%= usuario.id %>"><%= usuario.nombre %></li>
+          <% }); %>
+        </ul>
+      </div>      
+
+      <div class="chatConteiner">
+          <div class="row" id="destinatario">
+            <label value="Nayelis" for="">Usuario</label>
+          </div>
+          <div id="chat-container"></div>
+          <div class="row">
+              <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+              <button id="send-button">Enviar</button>
+          </div>
+      </div>
+    </div>
+</html>

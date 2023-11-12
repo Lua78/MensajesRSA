@@ -5,11 +5,21 @@ const morgan = require('morgan');
 const path = require('path');
 const messagesR = require("./routes/messages.route")
 const usersR = require("./routes/users.route")
+const session = require('express-session');
+
+app.use(session({
+  secret: 'akjshdaslkd35asdf45ads4a-aas36as5d65',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 60 * 60 * 1000 * 12,
+    secure: false,     // Configúralo a 'true' si estás usando HTTPS
+  }
+}));
 
 app.use(morgan('combined')); 
 
 app.set('view engine', 'ejs');
-
 app.use('/js',express.static(path.join(__dirname, 'public/js')));
 app.use('/css',express.static(path.join(__dirname, 'public/css')));
 app.use('/jquery',express.static(path.join(__dirname, 'node_modules/jquery/dist')));

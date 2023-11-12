@@ -12,8 +12,8 @@ CREATE TABLE usuarios (
 );
 CREATE TABLE mensajes (
     id INT IDENTITY PRIMARY KEY,
-    remitente_username VARCHAR(255) NOT NULL,
-    receptor_username VARCHAR(255) NOT NULL,
+    remitente_id VARCHAR(255) NOT NULL,
+    receptor_id VARCHAR(255) NOT NULL,
     mensaje TEXT NOT NULL,
     fecha_envio DATETIME DEFAULT GETDATE()
 );

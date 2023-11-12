@@ -47,7 +47,7 @@ async function getUsuarios(username) {
   try {
     await sql.connect(config);
     const result = await sql.query`
-      SELECT nombre, username 
+      SELECT id, nombre, username, clave_privada, clave_publica
       FROM usuarios
       WHERE username != ${username}
     `;
@@ -63,7 +63,7 @@ async function getUsuario(username) {
     await sql.connect(config);
 
     const result = await sql.query`
-      SELECT nombre, username, contrasena
+      SELECT id , nombre, username, contrasena,  clave_privada, clave_publica
       FROM usuarios
       WHERE username = ${username}
     `;

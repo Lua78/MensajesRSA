@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 app.use('/js',express.static(path.join(__dirname, 'public/js')));
 app.use('/css',express.static(path.join(__dirname, 'public/css')));
 app.use('/jquery',express.static(path.join(__dirname, 'node_modules/jquery/dist')));
-
+app.use('/sweet',express.static(path.join(__dirname, 'node_modules/sweetalert2/dist')));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

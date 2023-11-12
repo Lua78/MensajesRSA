@@ -3,10 +3,18 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="sweet/sweetalert2.min.css">
+    <script src="sweet/sweetalert2.min.js"></script>
+    <script src="js/Alertas.js"></script>
 </head>
 <body>
+    <% if (typeof mensaje !== 'undefined') { %>
+        <script>
+            AlertaErr("<%= mensaje %>");
+        </script>
+    <% } %>
+      
     <h1 class="center">Iniciar Sesion</h1>
-
     <form id="Principal" action="/Login" method="post">
 
         <label for="username">Nombre de Usuario:</label>
@@ -22,9 +30,8 @@
             <a href="/Registro">Regístrate</a>
         </div>
     </form>
-
 </body>
-
+</script>
 <footer>
     <script src="jquery/jquery.min.js"></script>
     <script src="js/SesionValidaciones.js"></script>

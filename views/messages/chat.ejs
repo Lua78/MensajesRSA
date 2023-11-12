@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="/css/chat.css" />
   </head>
   <body>
+    <% if (message) { %>
+      <p><%= message %></p>
+    <% } %>
+
     <div class="contenedor" >
       <div id="contacts-container">
         <h2>Contactos</h2>
@@ -16,7 +20,6 @@
           <% }); %>
         </ul>
       </div>      
-
       <div class="chatConteiner">
           <div class="row" id="destinatario">
             <label value="Nayelis" for="">Usuario</label>

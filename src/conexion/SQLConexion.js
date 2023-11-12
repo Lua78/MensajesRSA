@@ -47,11 +47,33 @@ async function getUsuarios(username) {
   try {
     await sql.connect(config);
     const result = await sql.query`
-      SELECT id, nombre, username 
+      SELECT nombre, username 
       FROM usuarios
       WHERE username != ${username}
     `;
     return result.recordset;
+  } catch (error) {
+    throw error;
+  } finally {
+    await sql.close();
+  }
+}
+async function getUsuario(username) {
+  try {
+    await sql.connect(config);
+
+    const result = await sql.query`
+      SELECT nombre, username, contrasena
+      FROM usuarios
+      WHERE username = ${username}
+    `;
+    const user = result.recordset[0];
+    if (user) {
+      user.contrasena = await user.contrasena;
+      return user;
+    } else {
+      return null;
+    }
   } catch (error) {
     throw error;
   } finally {
@@ -63,18 +85,17 @@ async function getUsuarios(username) {
 async function ExisteUsuario(username) {
   try {
     await sql.connect(config);
-
-    const result = await sql.query(`
-      Select from ExisteUsuario
-        @username = '${username}',
-    `);
-
-    console.log('Usuario insertado correctamente:', result);
+    const result = await sql.query`
+      SELECT dbo.ExisteUsuario(${username}) as Existe ;
+    `;
+    const existeUsuario = result.recordset[0].Existe;
+    return existeUsuario === true;
   } catch (error) {
-    console.error('Error al insertar usuario:', error);
+    console.error('Error al buscar el usuario:', error);
     throw error;
   } finally {
     await sql.close();
   }
 }
-module.exports = {insertarUsuario,ExisteUsuario,getUsuarios}
+
+module.exports = {insertarUsuario,ExisteUsuario,getUsuarios,getUsuario}

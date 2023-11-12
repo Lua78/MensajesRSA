@@ -95,6 +95,24 @@ function AesDecrypt(text, key) {
     });
 }
 
+function AesDecryptPass(pass) {
+    return new Promise((resolve, reject) => {
+        try {
+            let keyB = GetBytesKey(skey);
+            let textParts = pass.split(':');
+            let iv = Buffer.from(textParts.shift(), 'hex');
+            let encryptedPass = Buffer.from(textParts.join(':'), 'hex');
+            let decipher = crypto.createDecipheriv(algorithm, Buffer.from(keyB), iv);
+            let decrypted = decipher.update(encryptedPass);
+            decrypted = Buffer.concat([decrypted, decipher.final()]);
+            resolve(decrypted.toString());
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+
 function GenerarClaves() {
     return new Promise((resolve, reject) => {
         const keySize = 2048;
@@ -125,4 +143,4 @@ function GenerarClaves() {
     });
 }
 
-module.exports = {GenerarClaves,AesEncrypt,AesDecrypt,GetBytesKey, EncriptarMensaje,DesEncriptarMensaje,AesEncryptPass};
+module.exports = {GenerarClaves,AesEncrypt,AesDecrypt,GetBytesKey, EncriptarMensaje,DesEncriptarMensaje,AesEncryptPass,AesDecryptPass};

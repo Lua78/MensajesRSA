@@ -2,6 +2,14 @@ const Encriptaciones = require('../src/utils/GeneradorClaves.js');
 const SqlConexion = require('../src/conexion/SQLConexion')
 const bodyParser = require('body-parser');
 const app = require('express')();
+const session = require('express-session');
+
+
+app.use(session({
+  secret: 'akjshdaslkd35asdf45ads4a-aas36as5d65', // Clave secreta para firmar la cookie de sesión
+  resave: true,
+  saveUninitialized: true,
+}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -32,12 +40,31 @@ app.post('/Registro', async (req, res) => {
 app.get('/Login',(req,res)=>{
   res.render('Sesion/Login');
 })
+
 app.post('/Login', async (req, res) => {
   try {
-    res.redirect('/Registro');
+    const {username,contrasena} = req.body
+    const existe = await SqlConexion.ExisteUsuario(username);
+    if(existe){
+      console.log("adasjkd");
+      const user = await SqlConexion.getUsuario(username);
+      const pass = await Encriptaciones.AesDecryptPass(user.contrasena)
+      if(pass === contrasena){
+        req.session.user = username;
+        res.redirect('/chats');
+      }else{
+        res.render('Sesion/Login',{
+          mensaje : 'Usuario o contraseña incorrectos'
+        })
+      }
+    }else{
+      res.render('Sesion/Login',{
+        mensaje : 'Usuario o contraseña incorrectos'
+      });
+    }
   } catch (error) {
     console.error('Error en la ruta /Login:', error);
-    res.redirect('/Login');
+    res.render('Sesion/Login');
   }
 });
 

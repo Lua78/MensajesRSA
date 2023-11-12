@@ -69,5 +69,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON dbo.usuarios TO "DEVUSER";
 -- Para la tabla 'mensajes'
 GRANT SELECT, INSERT, UPDATE, DELETE ON dbo.mensajes TO "DEVUSER";
 GRANT EXECUTE ON dbo.InsertarUsuario TO DEVUSER;
+GRANT EXEC ON ExisteUsuario TO DEVUSER;
 
 

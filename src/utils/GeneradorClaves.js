@@ -35,28 +35,29 @@ function AesEncryptPass(pass) {
         }
     });
 }
-
-function EncriptarMensaje(mensaje,publicKeyPEM){
+function EncriptarMensaje(mensaje, publicKeyPEM) {
     return new Promise((resolve, reject) => {
-        try {
-            const publicKey = crypto.createPublicKey({
-                key: publicKeyPEM,
-                format: 'pem',
-            });
-            const mensajeCifrado = crypto.publicEncrypt(
-                {
-                  key: publicKey,
-                  padding: crypto.constants.RSA_PKCS1_PADDING, // Uso del relleno PKCS#1
-                },
-                Buffer.from(mensaje, 'utf-8')
-            );
-            resolve(mensajeCifrado)
-        } catch (error) {
-            reject(error);
-        }
+      try {
+        const publicKey = crypto.createPublicKey({
+          key: publicKeyPEM,
+          format: 'pem',
+        });
+        const mensajeCifrado = crypto.publicEncrypt(
+          {
+            key: publicKey,
+            padding: crypto.constants.RSA_PKCS1_PADDING,
+          },
+          Buffer.from(mensaje, 'utf-8')
+        );
+  
+        resolve(mensajeCifrado.toString('base64'));
+      } catch (error) {
+        console.log("El error sigue aca");
+        reject(error);
+      }
     });
-}
-
+  }
+  
 function DesEncriptarMensaje(mensaje,privateKeyPEM){
     return new Promise((resolve, reject) => {
         try {
@@ -69,7 +70,7 @@ function DesEncriptarMensaje(mensaje,privateKeyPEM){
                   key: privateKey,
                   padding: crypto.constants.RSA_PKCS1_PADDING, // Uso del relleno PKCS#1
                 },
-                mensajeDesCifrado
+                mensaje
             );
             resolve(mensajeDesCifrado.toString())
         } catch (error) {

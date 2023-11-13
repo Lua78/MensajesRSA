@@ -17,6 +17,7 @@
     <% } %>
     <div class="contenedor" >
       <div id="contacts-container">
+        <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
         <h2>Contactos</h2>
         <ul>
           <% usuarios.forEach(usuario => { %>
@@ -26,7 +27,7 @@
       </div>      
       <div class="chatConteiner">
           <div class="row" id="destinatario">
-            <label value="Nayelis" for="">Selecciona un usuario</label>
+            <button id="userdes" value="-1" disabled>Selecciona un contacto</button>
           </div>
           <div id="chat-container"></div>
           <div class="row">
@@ -34,10 +35,12 @@
               <button id="send-button">Enviar</button>
           </div>
       </div>
+
     </div>
   </body>
   <footer>
     <script src="/jquery/jquery.min.js"></script>
     <script src="/js/SesionValidaciones.js"></script>
+    <script src="/js/chat.js"></script>
   </footer>
 </html>

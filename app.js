@@ -12,13 +12,12 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: 60 * 60 * 1000 * 12,
+    maxAge: 60 * 60 * 1000,
     secure: false,     // Configúralo a 'true' si estás usando HTTPS
   }
 }));
 
 app.use(morgan('combined')); 
-
 app.set('view engine', 'ejs');
 app.use('/js',express.static(path.join(__dirname, 'public/js')));
 app.use('/css',express.static(path.join(__dirname, 'public/css')));

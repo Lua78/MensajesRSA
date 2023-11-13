@@ -10,10 +10,18 @@ CREATE TABLE usuarios (
     clave_publica TEXT NOT NULL,
     isadmin boolean NOT NULL
 );
-CREATE TABLE mensajes (
+
+CREATE TABLE mensajesEnviados (
     id INT IDENTITY PRIMARY KEY,
-    remitente_id VARCHAR(255) NOT NULL,
-    receptor_id VARCHAR(255) NOT NULL,
+    remitente_id INT NOT NULL,
+    receptor_id INT NOT NULL,
+    mensaje TEXT NOT NULL,
+    fecha_envio DATETIME DEFAULT GETDATE()
+);
+CREATE TABLE mensajesRecibidos (
+    id INT IDENTITY PRIMARY KEY,
+    remitente_id INT NOT NULL,
+    receptor_id INT NOT NULL,
     mensaje TEXT NOT NULL,
     fecha_envio DATETIME DEFAULT GETDATE()
 );

@@ -58,12 +58,13 @@ async function getUsuarios(username) {
     await sql.close();
   }
 }
+
 async function getUsuario(username) {
   try {
     await sql.connect(config);
 
     const result = await sql.query`
-      SELECT id , nombre, username, contrasena,  clave_privada, clave_publica
+      SELECT id , nombre, username, contrasena, clave_privada, clave_publica
       FROM usuarios
       WHERE username = ${username}
     `;
@@ -74,6 +75,22 @@ async function getUsuario(username) {
     } else {
       return null;
     }
+  } catch (error) {
+    throw error;
+  } finally {
+    await sql.close();
+  }
+}
+async function getUsuarioKey(id) {
+  try {
+    await sql.connect(config);
+    const result = await sql.query`
+      SELECT clave_publica
+      FROM usuarios
+      WHERE id = ${id}
+    `;
+    const key = result.recordset[0].clave_publica
+    return key;
   } catch (error) {
     throw error;
   } finally {
@@ -98,4 +115,4 @@ async function ExisteUsuario(username) {
   }
 }
 
-module.exports = {insertarUsuario,ExisteUsuario,getUsuarios,getUsuario}
+module.exports = {config,getUsuarioKey, insertarUsuario,ExisteUsuario,getUsuarios,getUsuario}

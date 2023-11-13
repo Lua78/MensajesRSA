@@ -25,7 +25,7 @@ app.post('/Registro', async (req, res) => {
     console.log('Usuario registrado correctamente.');
     const userP = await SqlConexion.getUsuario(username)
     req.session.user =  userP
-    req.session.userId = id
+    //req.sessionID = userP.id
     res.redirect('/chats');
   } catch (error) {
     console.error('Error en la petición /Registro:', error);
@@ -47,6 +47,7 @@ app.post('/Login', async (req, res) => {
       const pass = await Encriptaciones.AesDecryptPass(userP.contrasena)
       if(pass === contrasena){
         req.session.user = userP;
+        //req.sessionID = userP.id
         res.redirect('/chats')
       }else{
         res.render('Sesion/Login',{
@@ -64,5 +65,16 @@ app.post('/Login', async (req, res) => {
   }
 });
 
+app.get('/prueba', async (req, res) => {
+  // Acceder a datos almacenados en la sesión
+  const usuario = req.session.user;
+  const key = await SqlConexion.getUsuarioKey("3")
+  console.log(req.session.user)
+  if (usuario) {
+    res.send(`Bienvenido, ${usuario.nombre}!`);
+  } else {
+    res.send('Usuario no autenticado');
+  }
+});
 
 module.exports = app

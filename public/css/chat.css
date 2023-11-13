@@ -7,27 +7,41 @@
     overflow-y: scroll;
 }
 ul {
+  border: solid 1px #213652;
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
   }
-
+  #userdes:disabled{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    background-color: #213652;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
   li {
     width: 100%;
     display: flex;
     justify-content: center;
-    background-color: #f0f0f0;
+    background-color: #213652;
     padding: 10px;
-    margin: 10px;
-    border-radius: 8px;
+    color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
 
+  .lclick{
+    background-color: white;
+    color: #213652;
+  }
   li:hover {
-    background-color: #ddd;
+    background-color: #ede9f1;
+    color: rgb(20, 20, 20);
   }
   
 .contenedor{
@@ -76,3 +90,19 @@ ul {
     height: auto;
     overflow-y: scroll;
   }
+
+  /* Estilos para el botón de cerrar sesión */
+.logout-button {
+  padding: 10px 15px;
+  background-color: #ff5959; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #d83c3c; /* Cambiar el color de fondo al pasar el ratón */
+}

@@ -36,12 +36,43 @@ app.post('/ingresar-mensaje', async (req, res) => {
     await sql.close();
   }
 });
+app.post('/cargar-mensajes', async (req, res) => {
+  try {
+    const { receptor_id } = req.body;
+    const remitente_id = req.session.user.id;
+    let Miclave = req.session.user
+    Miclave =  Miclave.clave_privada
+    MiclaveDesencriptada = await Encriptaciones.AesDecryptPass(Miclave);
+    console.log('mi clave: '+MiclaveDesencriptada)
+    await sql.connect(SqlConexion.config);
+    const recibidos = await sql.query`
+      SELECT * FROM mensajesRecibidos WHERE remitente_id = ${receptor_id} AND receptor_id = ${remitente_id};
+    `;
+    const enviados = await sql.query`
+    SELECT * FROM mensajesEnviados WHERE remitente_id = ${remitente_id} AND receptor_id = ${receptor_id};
+    `;
+    for (let mensaje of recibidos.recordset) {
+      mensaje.mensaje = await Encriptaciones.DesEncriptarMensaje(mensaje.mensaje, MiclaveDesencriptada);
+    }
 
+    for (let mensaje of enviados.recordset) {
+      mensaje.mensaje = await Encriptaciones.DesEncriptarMensaje(mensaje.mensaje, MiclaveDesencriptada);
+    }
+    console.log(enviados);
+    console.log(recibidos)
+    res.status(200).send('Cargados');
+  } catch (error) {
+    console.error('Error al cargar los mensajes:', error);
+    res.status(500).send('Error al cargar los mensajes');
+  } finally {
+    await sql.close();
+  }
+});
 
 app.get('/chats', async (req, res) => {
   try {
-    //const username = req.session.user.username
-    const result = await SqlConexion.getUsuarios('nbelen');
+    const username = req.session.user.username
+    const result = await SqlConexion.getUsuarios(username);
     res.render('messages/chat', {
       usuarios: result, 
       mensaje : 'Inicio de sesion existoso',

@@ -1,9 +1,11 @@
 
 $('li').on('click', function() {
+    id =  $(this).val();
     $('li').removeClass('lclick');
     $(this).addClass('lclick');
     $('#userdes').html($(this).text());
-    $('#userdes').val($(this).val());
+    $('#userdes').val(id);
+    CargarMensajes(id);
 });
 
 $('#send-button').on('click', function () {
@@ -24,3 +26,19 @@ $('#send-button').on('click', function () {
   
     $('#message-input').val('');
 });
+
+function CargarMensajes(id_receptor){
+  $.post("/cargar-mensajes", { receptor_id: id_receptor}, function (response) {
+    AlertaExitoso(response);
+  });
+}
+function cerrarSesion(){
+  $.post("/logout",
+    function (data, textStatus, jqXHR) {
+      AlertaExitoso(data);
+      setTimeout(function(){
+        window.location.href = '/';
+      },1000) 
+    },
+  );
+}

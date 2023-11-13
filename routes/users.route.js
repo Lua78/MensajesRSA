@@ -77,4 +77,8 @@ app.get('/prueba', async (req, res) => {
   }
 });
 
+app.post('/logout',(req,res)=>{
+  req.session.destroy
+  res.status(200).send('Hasta Luego');
+})
 module.exports = app

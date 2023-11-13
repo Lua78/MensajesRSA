@@ -42,38 +42,29 @@ function EncriptarMensaje(mensaje, publicKeyPEM) {
           key: publicKeyPEM,
           format: 'pem',
         });
-        const mensajeCifrado = crypto.publicEncrypt(
-          {
-            key: publicKey,
-            padding: crypto.constants.RSA_PKCS1_PADDING,
-          },
-          Buffer.from(mensaje, 'utf-8')
-        );
+        const mensajeCifrado = crypto.publicEncrypt(publicKey,Buffer.from(mensaje, 'utf-8'));
   
         resolve(mensajeCifrado.toString('base64'));
       } catch (error) {
-        console.log("El error sigue aca");
         reject(error);
       }
     });
-  }
+}
   
-function DesEncriptarMensaje(mensaje,privateKeyPEM){
+function DesEncriptarMensaje(mensaje, privateKeyPEM) {
+    console.log(mensaje);
     return new Promise((resolve, reject) => {
         try {
             const privateKey = crypto.createPrivateKey({
                 key: privateKeyPEM,
                 format: 'pem',
             });
-            const mensajeDesCifrado = crypto.privateDecrypt(
-                {
-                  key: privateKey,
-                  padding: crypto.constants.RSA_PKCS1_PADDING, // Uso del relleno PKCS#1
-                },
-                mensaje
-            );
-            resolve(mensajeDesCifrado.toString())
+            const encryptedBuffer = Buffer.from(mensaje, 'base64');
+            const mensajeDesCifrado = crypto.privateDecrypt(privateKey, encryptedBuffer);
+
+            resolve(mensajeDesCifrado.toString());
         } catch (error) {
+            console.log("El error sigue aca");
             reject(error);
         }
     });

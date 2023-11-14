@@ -1,10 +1,7 @@
 const Encriptaciones = require('../src/utils/GeneradorClaves.js');
 const SqlConexion = require('../src/conexion/SQLConexion')
-const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
@@ -13,11 +10,10 @@ app.get('/', (req, res) => {
 app.get('/Registro', (req,res)=>{
   res.render('Sesion/Registro')
 } )
-
 app.post('/Registro', async (req, res) => {
   try {
     const { nombre, username, contrasena } = req.body;
-    let contrasenaEn = await Encriptaciones.AesEncryptPass(contrasena);
+    let contrasenaEn = await Encriptaciones.hashContraseña(contrasena);
     const resultado = await Encriptaciones.GenerarClaves();
     const userPublicKey = resultado.publicKey;
     const userPrivateKey = resultado.encryptedPrivateKey;
@@ -44,8 +40,7 @@ app.post('/Login', async (req, res) => {
     const existe = await SqlConexion.ExisteUsuario(username);
     if(existe){
       const userP = await SqlConexion.getUsuario(username);
-      const pass = await Encriptaciones.AesDecryptPass(userP.contrasena)
-      if(pass === contrasena){
+      if(await Encriptaciones.compararContrasena(contrasena,userP.contrasena)){
         req.session.user = userP;
         //req.sessionID = userP.id
         res.redirect('/chats')
@@ -79,6 +74,7 @@ app.get('/prueba', async (req, res) => {
 
 app.post('/logout',(req,res)=>{
   req.session.destroy
+  req.session.user = null;
   res.status(200).send('Hasta Luego');
 })
 module.exports = app

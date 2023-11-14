@@ -51,6 +51,7 @@ app.post('/cargar-mensajes', async (req, res) => {
     const enviados = await sql.query`
     SELECT * FROM mensajesEnviados WHERE remitente_id = ${remitente_id} AND receptor_id = ${receptor_id};
     `;
+    
     for (let mensaje of recibidos.recordset) {
       mensaje.mensaje = await Encriptaciones.DesEncriptarMensaje(mensaje.mensaje, MiclaveDesencriptada);
     }

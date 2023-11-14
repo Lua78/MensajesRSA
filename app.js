@@ -6,18 +6,22 @@ const path = require('path');
 const messagesR = require("./routes/messages.route")
 const usersR = require("./routes/users.route")
 const session = require('express-session');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(session({
   secret: 'akjshdaslkd35asdf45ads4a-aas36as5d65',
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: 60 * 60 * 1000,
-    secure: false,     // Configúralo a 'true' si estás usando HTTPS
+    maxAge: 60 * 60 * 1000,//sesion de 1 hora
+    secure: false,    
   }
 }));
-
 app.use(morgan('combined')); 
+
 app.set('view engine', 'ejs');
 app.use('/js',express.static(path.join(__dirname, 'public/js')));
 app.use('/css',express.static(path.join(__dirname, 'public/css')));

@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+
 const algorithm = 'aes-256-ctr';
 const IV_LENGTH = 16;
 const skey = "askadq-fgwfjwnhef";
@@ -8,19 +10,6 @@ function GetBytesKey(key) {
     return Buffer.from(key_base_64, 'base64');
 }
 
-function AesEncrypt(text, key, iv) {
-    return new Promise((resolve, reject) => {
-        try {
-            let keyB = GetBytesKey(key);
-            let cipher = crypto.createCipheriv(algorithm, Buffer.from(keyB), iv);
-            let encrypted = cipher.update(text);
-            encrypted = Buffer.concat([encrypted, cipher.final()]);
-            resolve(iv.toString('hex') + ':' + encrypted.toString('hex'));
-        } catch (error) {
-            reject(error);
-        }
-    });
-}
 function AesEncryptPass(pass) {
     return new Promise((resolve, reject) => {
         try {
@@ -70,22 +59,6 @@ function DesEncriptarMensaje(mensaje, privateKeyPEM) {
     });
 }
 
-function AesDecrypt(text, key) {
-    return new Promise((resolve, reject) => {
-        try {
-            let keyB = GetBytesKey(key);
-            let textParts = text.split(':');
-            let iv = Buffer.from(textParts.shift(), 'hex');
-            let encryptedText = Buffer.from(textParts.join(':'), 'hex');
-            let decipher = crypto.createDecipheriv(algorithm, Buffer.from(keyB), iv);
-            let decrypted = decipher.update(encryptedText);
-            decrypted = Buffer.concat([decrypted, decipher.final()]);
-            resolve(decrypted.toString());
-        } catch (error) {
-            reject(error);
-        }
-    });
-}
 
 function AesDecryptPass(pass) {
     return new Promise((resolve, reject) => {
@@ -126,7 +99,7 @@ function GenerarClaves() {
             }
             try {
                 const iv = crypto.randomBytes(IV_LENGTH);
-                const encryptedPrivateKey = await AesEncrypt(privateKey, skey, iv);
+                const encryptedPrivateKey = await AesEncryptPass(privateKey);
                 resolve({ publicKey, encryptedPrivateKey });
             } catch (error) {
                 reject(error);
@@ -134,5 +107,16 @@ function GenerarClaves() {
         });
     });
 }
+async function hashContraseña(contrasena) {
+    const saltos = 10;
+    console.log("asad")
+    const contrasenaHash = await bcrypt.hash(contrasena, saltos);
+    return contrasenaHash;
+}
 
-module.exports = {GenerarClaves,AesEncrypt,AesDecrypt,GetBytesKey, EncriptarMensaje,DesEncriptarMensaje,AesEncryptPass,AesDecryptPass};
+
+async function compararContrasena(inputContrasena, contrasenaHash) {
+    const match = await bcrypt.compare(inputContrasena, contrasenaHash);
+    return match;
+}
+module.exports = {hashContraseña,compararContrasena,GenerarClaves,GetBytesKey, EncriptarMensaje,DesEncriptarMensaje,AesEncryptPass,AesDecryptPass};

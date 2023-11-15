@@ -8,23 +8,23 @@ CREATE TABLE usuarios (
 	contrasena text NOT NULL,
     clave_privada TEXT NOT NULL,
     clave_publica TEXT NOT NULL,
-    isadmin boolean NOT NULL
+    isadmin BIT NOT NULL
+);
+CREATE TABLE TipoMensaje(
+    id int NOT NULL,
+    tipo VARCHAR(50)
+)
+INSERT INTO TipoMensaje VALUES(1,'Recibido'),(2,'Enviado')
+
+CREATE TABLE Mensaje (
+    id INT IDENTITY PRIMARY KEY,
+    remitente_id INT NOT NULL,
+    receptor_id INT NOT NULL,
+    mensaje TEXT NOT NULL,
+    tipo INT NOT NULL,
+    fecha_envio DATETIME DEFAULT GETDATE()
 );
 
-CREATE TABLE mensajesEnviados (
-    id INT IDENTITY PRIMARY KEY,
-    remitente_id INT NOT NULL,
-    receptor_id INT NOT NULL,
-    mensaje TEXT NOT NULL,
-    fecha_envio DATETIME DEFAULT GETDATE()
-);
-CREATE TABLE mensajesRecibidos (
-    id INT IDENTITY PRIMARY KEY,
-    remitente_id INT NOT NULL,
-    receptor_id INT NOT NULL,
-    mensaje TEXT NOT NULL,
-    fecha_envio DATETIME DEFAULT GETDATE()
-);
 
 GO
 

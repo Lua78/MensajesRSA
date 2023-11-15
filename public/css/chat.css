@@ -5,6 +5,7 @@
     padding: 10px;
     height: 400px;
     overflow-y: scroll;
+    flex-direction: column;
 }
 ul {
   border: solid 1px #213652;
@@ -45,6 +46,7 @@ ul {
   }
   
 .contenedor{
+    max-height: 80%;
     min-height: 400px;
     width: 100%;
     display: flex;
@@ -59,7 +61,18 @@ ul {
     overflow-y: scroll;
     flex-direction: column;
 }
+#toggleButton1,#toggleButton2 {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  background-color: blue;
+  margin-bottom: 10px;
+}
 
+#contacts-container.collapsed {
+  max-height: 500px; 
+  display: none;
+}
 
 #message-input {
     width: 70%;
@@ -79,6 +92,8 @@ ul {
     display: flex;
     width: 100%;
     flex-direction: column;
+    max-height: 80%;
+    overflow-y: scroll;
 }
 .row{
     width: 100%;
@@ -105,4 +120,54 @@ ul {
 
 .logout-button:hover {
   background-color: #d83c3c; /* Cambiar el color de fondo al pasar el ratón */
+}
+#chat-container div {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  max-width: 100%;
+}
+
+
+#chat-container .destinatario {
+  min-width: 21%;
+  display: flex;
+  flex-direction: column; /* Cambiado a column para apilar elementos verticalmente */
+  background-color: #008CBA; /* Color de fondo de destinatario */
+  color: white;
+  float: left;
+  margin-right: 30%;
+}
+
+#chat-container .remitente {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 21%;
+  background-color: #4CAF50; /* Color de fondo de remitente */
+  float: right; /* Cambiado a float: right para alinear a la derecha */
+  margin-left: 30%;
+}
+
+#chat-container .mensaje-hora-destinatario,
+#chat-container .mensaje-texto-destinatario,
+#chat-container .mensaje-hora-remitente,
+#chat-container .mensaje-texto-remitente {
+  margin-top: 5px;
+}
+
+#chat-container .mensaje-hora-destinatario {
+  font-size: 8px;
+  color: #ffffff;
+}
+
+#chat-container .mensaje-texto-destinatario,
+#chat-container .mensaje-texto-remitente {
+  font-size: 14px;
+  color: #070707;
+}
+
+#chat-container .mensaje-hora-remitente {
+  font-size: 6px;
+  color: #d4d3d3;
 }

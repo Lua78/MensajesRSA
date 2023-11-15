@@ -37,6 +37,7 @@ app.get('/Login',(req,res)=>{
 app.post('/Login', async (req, res) => {
   try {
     const {username,contrasena} = req.body
+    console.log(username,  " --- ",contrasena)
     const existe = await SqlConexion.ExisteUsuario(username);
     if(existe){
       const userP = await SqlConexion.getUsuario(username);
@@ -63,7 +64,6 @@ app.post('/Login', async (req, res) => {
 app.get('/prueba', async (req, res) => {
   // Acceder a datos almacenados en la sesión
   const usuario = req.session.user;
-  const key = await SqlConexion.getUsuarioKey("3")
   console.log(req.session.user)
   if (usuario) {
     res.send(`Bienvenido, ${usuario.nombre}!`);

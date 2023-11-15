@@ -21,12 +21,18 @@ app.post('/ingresar-mensaje', async (req, res) => {
 
     await sql.connect(SqlConexion.config);
     await sql.query`
-      INSERT INTO mensajesRecibidos (remitente_id, receptor_id, mensaje)
-      VALUES (${remitente_id}, ${receptor_id}, ${mEncriptado});
+    EXEC insertarMensaje
+      @remitente_id = ${remitente_id},
+      @destinatario_id = ${receptor_id},
+      @mensaje = ${mEncriptado},
+      @tipo = 1
     `;
     await sql.query`
-      INSERT INTO mensajesEnviados (remitente_id, receptor_id, mensaje)
-      VALUES (${remitente_id}, ${receptor_id}, ${mEncriptadoLocal});
+    EXEC insertarMensaje
+      @remitente_id = ${remitente_id},
+      @destinatario_id = ${receptor_id},
+      @mensaje = ${mEncriptadoLocal},
+      @tipo = 2
     `;
     res.send('Enviado');
   } catch (error) {
@@ -43,25 +49,20 @@ app.post('/cargar-mensajes', async (req, res) => {
     let Miclave = req.session.user
     Miclave =  Miclave.clave_privada
     MiclaveDesencriptada = await Encriptaciones.AesDecryptPass(Miclave);
-    console.log('mi clave: '+MiclaveDesencriptada)
     await sql.connect(SqlConexion.config);
-    const recibidos = await sql.query`
-      SELECT * FROM mensajesRecibidos WHERE remitente_id = ${receptor_id} AND receptor_id = ${remitente_id};
+    const Tmensajes = await sql.query`
+    EXEC getMENSAJES
+      @id_remitente = ${remitente_id},
+      @id_destinatario = ${receptor_id}
     `;
-    const enviados = await sql.query`
-    SELECT * FROM mensajesEnviados WHERE remitente_id = ${remitente_id} AND receptor_id = ${receptor_id};
-    `;
-    
-    for (let mensaje of recibidos.recordset) {
+
+    for (let mensaje of Tmensajes.recordset) {
       mensaje.mensaje = await Encriptaciones.DesEncriptarMensaje(mensaje.mensaje, MiclaveDesencriptada);
     }
 
-    for (let mensaje of enviados.recordset) {
-      mensaje.mensaje = await Encriptaciones.DesEncriptarMensaje(mensaje.mensaje, MiclaveDesencriptada);
-    }
-    console.log(enviados);
-    console.log(recibidos)
-    res.status(200).send('Cargados');
+    console.log(Tmensajes.recordset)
+
+    res.status(200).json({ Mensajes: Tmensajes.recordset, idUsuario:req.session.user.id });;
   } catch (error) {
     console.error('Error al cargar los mensajes:', error);
     res.status(500).send('Error al cargar los mensajes');
@@ -69,7 +70,6 @@ app.post('/cargar-mensajes', async (req, res) => {
     await sql.close();
   }
 });
-
 app.get('/chats', async (req, res) => {
   try {
     const username = req.session.user.username

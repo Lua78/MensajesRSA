@@ -53,7 +53,6 @@ function DesEncriptarMensaje(mensaje, privateKeyPEM) {
 
             resolve(mensajeDesCifrado.toString());
         } catch (error) {
-            console.log("El error sigue aca");
             reject(error);
         }
     });

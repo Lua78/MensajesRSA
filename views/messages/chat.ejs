@@ -16,7 +16,9 @@
       </script>
     <% } %>
     <div class="contenedor" >
-      <div id="contacts-container">
+      <button id="toggleButton1" onclick="toggleDiv1()"></button>
+      <div class="collapsed" id="contacts-container">
+        <button id="toggleButton2" onclick="toggleDiv2()"></button>
         <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
         <h2>Contactos</h2>
         <ul>

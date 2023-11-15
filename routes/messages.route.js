@@ -6,7 +6,7 @@ const sql = require("mssql");
 const bodyParser = require('body-parser');
 const path = require('path');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json()); 
 
 app.post('/ingresar-mensaje', async (req, res) => {
   try {

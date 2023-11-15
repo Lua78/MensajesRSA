@@ -15,7 +15,7 @@ CREATE TABLE TipoMensaje(
     tipo VARCHAR(50)
 )
 INSERT INTO TipoMensaje VALUES(1,'Recibido'),(2,'Enviado')
-
+CREATE PROCEDURE
 CREATE TABLE Mensaje (
     id INT IDENTITY PRIMARY KEY,
     remitente_id INT NOT NULL,
@@ -80,3 +80,24 @@ GRANT EXECUTE ON dbo.InsertarUsuario TO DEVUSER;
 GRANT EXEC ON ExisteUsuario TO DEVUSER;
 
 
+Create procedure insertarMensaje
+      @remitente_id INT,
+      @destinatario_id INT,
+      @mensaje TEXT,
+      @tipo INT
+	  as
+	  begin
+	  insert into mensajes VALUES (@remitente_id,@destinatario_id,@mensaje,@tipo,GETDATE())
+	  end
+
+	  go
+CREATE PROCEDURE getMENSAJES
+      @id_remitente int,
+      @id_destinatario int
+	  as
+	  begin
+	  select *  from mensajes where
+	  (receptor_id = @id_destinatario and remitente_id = @id_remitente and tipo = 2)
+	  or
+	  (receptor_id = @id_remitente  and remitente_id=@id_destinatario and tipo = 1)
+	  end

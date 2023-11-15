@@ -5,43 +5,17 @@ const SqlConexion = require('../src/conexion/SQLConexion')
 const sql = require("mssql");
 const bodyParser = require('body-parser');
 const path = require('path');
+const http = require('http');
+const socketIO = require('socket.io');
+const server = http.createServer(app);
+const io = require('socket.io')(server, {
+  cors: {
+   origin: "http://localhost:3000", //specific origin you want to give access to,
+},
+});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json()); 
 
-app.post('/ingresar-mensaje', async (req, res) => {
-  try {
-    const { receptor_id, mensaje } = req.body;
-    const remitente_id = req.session.user.id;
-    const keyReceptor = await SqlConexion.getUsuarioKey(receptor_id);
-    let Miclave = req.session.user
-    Miclave =  Miclave.clave_publica
-
-    const mEncriptado = await Encriptaciones.EncriptarMensaje(mensaje, keyReceptor);
-    const mEncriptadoLocal = await Encriptaciones.EncriptarMensaje(mensaje,Miclave);
-
-    await sql.connect(SqlConexion.config);
-    await sql.query`
-    EXEC insertarMensaje
-      @remitente_id = ${remitente_id},
-      @destinatario_id = ${receptor_id},
-      @mensaje = ${mEncriptado},
-      @tipo = 1
-    `;
-    await sql.query`
-    EXEC insertarMensaje
-      @remitente_id = ${remitente_id},
-      @destinatario_id = ${receptor_id},
-      @mensaje = ${mEncriptadoLocal},
-      @tipo = 2
-    `;
-    res.send('Enviado');
-  } catch (error) {
-    console.error('Error al ingresar el mensaje:', error);
-    res.status(500).send('Error al ingresar el mensaje');
-  } finally {
-    await sql.close();
-  }
-});
 app.post('/cargar-mensajes', async (req, res) => {
   try {
     const { receptor_id } = req.body;
@@ -61,7 +35,7 @@ app.post('/cargar-mensajes', async (req, res) => {
     }
 
     console.log(Tmensajes.recordset)
-
+    io.emit('connection');
     res.status(200).json({ Mensajes: Tmensajes.recordset, idUsuario:req.session.user.id });;
   } catch (error) {
     console.error('Error al cargar los mensajes:', error);
@@ -81,6 +55,13 @@ app.get('/chats', async (req, res) => {
   } catch (error) {
     console.error('Error al cargar a los usuarios: ', error);
     res.status(500).send('Error interno del servidor');
+  }
+});
+app.get('/obtener-id-usuario', (req, res) => {
+  if (req.session.user) {
+    res.json({ id: req.session.user.id});
+  } else {
+    res.status(401).json({ error: 'No autenticado' });
   }
 });
 

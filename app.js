@@ -94,15 +94,10 @@ app.post('/ingresar-mensaje', async (req, res) => {
       @mensaje = ${mEncriptadoLocal},
       @tipo = 2
     `;
-    io.to(receptor_id).emit('nuevo-mensaje', {
+    io.to(remitente_id).emit('nuevo-mensaje', {
       mensaje: mensaje,
-      tipo: 1
+      sala : remitente_id
     });
-
-    io.to(remitente_id).emit('nuevo-mensaje',{
-      mensaje : mensaje ,
-      tipo : 2
-    })
   } catch (error) {
     console.error('Error al ingresar el mensaje:', error);
     res.status(500).send('Error al ingresar el mensaje');

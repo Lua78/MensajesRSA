@@ -1,119 +1,120 @@
-
-
-body{
-  height: 100%!important;
+body {
+  height: 100% !important;
 }
 #chat-container {
-    flex: 1;
-    border: 1px solid #ccc;
-    padding: 10px;
-    height: 400px;
-    overflow-y: scroll;
-    flex-direction: column;
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: 400px;
+  overflow-y: scroll;
+  flex-direction: column;
 }
 ul {
   border: solid 1px #213652;
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-  #userdes:disabled{
-    width: 100%;
-    display: flex;
-    justify-content: left;
-    background-color: #213652;
-    padding: 10px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  li {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #213652;
-    padding: 10px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+#userdes:disabled {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  background-color: #213652;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+li {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #213652;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-  .lclick{
-    background-color: white;
-    color: #213652;
-  }
-  li:hover {
-    background-color: #ede9f1;
-    color: rgb(20, 20, 20);
-  }
-  
-.contenedor{
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+.lclick {
+  background-color: white;
+  color: #213652;
+}
+li:hover {
+  background-color: #ede9f1;
+  color: rgb(20, 20, 20);
+}
+
+.contenedor {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 #contacts-container {
-    width: 20%;
-    min-width: 150px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    height: auto;
-    overflow-y: scroll;
-    flex-direction: column;
+  width: 20%;
+  min-width: 150px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: auto;
+  overflow-y: scroll;
+  flex-direction: column;
+  transition: left 0.3s ease;
 }
-#toggleButton1,#toggleButton2 {
+#toggleButton1,
+#toggleButton2 {
   display: block;
   width: 2rem;
   height: 2rem;
   background-color: blue;
   margin-bottom: 10px;
 }
-
+#toglleButton2{
+  margin-left: 90%;
+}
 #contacts-container.collapsed {
-  max-height: 500px; 
+  max-height: 500px;
   display: none;
 }
 
 #message-input {
-    width: 70%;
-    min-height: 30px;
-    padding: 5px;
+  width: 70%;
+  min-height: 30px;
+  padding: 5px;
 }
 
 #send-button {
-    width: 30%;
-    padding: 8px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
+  width: 30%;
+  padding: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
-.chatConteiner{
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    max-height: 80%;
-    overflow-y: scroll;
+.chatConteiner {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  max-height: 80%;
+  overflow-y: scroll;
 }
-.row{
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    margin: none;
-    border: 1px solid #ccc;
-    padding: 10px;
-    height: auto;
-    overflow-y: scroll;
-  }
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin: none;
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: auto;
+  overflow-y: scroll;
+}
 
-  /* Estilos para el botón de cerrar sesión */
 .logout-button {
   padding: 10px 15px;
-  background-color: #ff5959; /* Color de fondo */
-  color: #fff; /* Color del texto */
+  background-color: #ff5959;
+  color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -122,7 +123,7 @@ ul {
 }
 
 .logout-button:hover {
-  background-color: #d83c3c; /* Cambiar el color de fondo al pasar el ratón */
+  background-color: #d83c3c;
 }
 #chat-container div {
   margin-bottom: 10px;
@@ -131,12 +132,11 @@ ul {
   max-width: 100%;
 }
 
-
 #chat-container .destinatario {
   min-width: 21%;
   display: flex;
-  flex-direction: column; /* Cambiado a column para apilar elementos verticalmente */
-  background-color: #008CBA; /* Color de fondo de destinatario */
+  flex-direction: column;
+  background-color: #008cba;
   color: white;
   float: left;
   margin-right: 30%;
@@ -147,8 +147,8 @@ ul {
   flex-direction: column;
   align-items: flex-end;
   min-width: 21%;
-  background-color: #4CAF50; /* Color de fondo de remitente */
-  float: right; /* Cambiado a float: right para alinear a la derecha */
+  background-color: #4caf50;
+  float: right;
   margin-left: 30%;
 }
 

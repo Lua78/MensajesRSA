@@ -3,7 +3,7 @@ const sql = require("mssql");
 const config = {
   user: "DEVUSER",
   password: "DEVUSER987*",
-  server: "UNPLAPTOP",
+  server: "DESKTOP-AIHOTLI",
   database: "MensajeriaRSA",
   options: {
     encrypt: true, 
@@ -11,14 +11,6 @@ const config = {
   },
 };
 
-async function conectar() {
-    try {
-      await sql.connect(config);
-      console.log('Conexión establecida correctamente.');
-    } catch (error) {
-      console.error('Error al conectar a la base de datos:', error);
-    }
-}
 
 async function insertarUsuario(nombre, username, contrasena, clavePrivada, clavePublica, isAdmin) {
   try {
@@ -106,6 +98,7 @@ async function ExisteUsuario(username) {
       SELECT dbo.ExisteUsuario(${username}) as Existe ;
     `;
     const existeUsuario = result.recordset[0].Existe;
+    console.log(existeUsuario)
     return existeUsuario === true;
   } catch (error) {
     console.error('Error al buscar el usuario:', error);

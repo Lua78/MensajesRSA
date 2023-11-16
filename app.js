@@ -30,7 +30,6 @@ io.on('connection', (socket) => {
   });
   socket.on('join', (data) => {
     const { sala } = data;
-    // Unirse a la sala
     socket.join(sala);
 
     console.log(`Usuario unido a la sala: ${sala}`);
@@ -94,9 +93,11 @@ app.post('/ingresar-mensaje', async (req, res) => {
       @mensaje = ${mEncriptadoLocal},
       @tipo = 2
     `;
+    const segs = Date.now()
     io.to(remitente_id).emit('nuevo-mensaje', {
       mensaje: mensaje,
-      sala : remitente_id
+      sala : remitente_id,
+      tiempo : segs
     });
   } catch (error) {
     console.error('Error al ingresar el mensaje:', error);

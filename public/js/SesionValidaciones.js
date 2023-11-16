@@ -17,13 +17,27 @@ $("#PrincipalRegistro").on("blur", "input" , function(){
     }
 })
 $("#PrincipalRegistro").on('submit',function(e){
-    // Validar el formulario aquí
+    e.preventDefault();
     var contrasena = $("#contrasena").val();
     var contrasenaR = $("#contrasenaR").val();
     if(contrasena !== contrasenaR){
-        alert("Las contraseñas no coinciden");
-        e.preventDefault(); 
+        AlertaErr("Las contraseñas no coinciden");
         $("#contrasena").val('');
         $("#contrasenaR").val('');
+    }else{
+        const nombre = $('#nombre').val();
+        const contrasena = $('#contrasena').val();
+        const username = $('#username').val();
+        $.ajax({
+            url: '/Registro',
+            type: 'POST',
+            data: { nombre, username, contrasena },
+            success: function (response) {
+              window.location = '/chats';
+            },
+            error: function (xhr, status, error) {
+                AlertaErr('Usuario no disponible');
+            }
+        });
     }
 });

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
     <title>Registro</title>
     <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="/sweet/sweetalert2.min.css">
+    <script src="/sweet/sweetalert2.min.js"></script>
+    <script src="/js/Alertas.js"></script>
 </head>
 <body>
     <h1 class="center">Registro de Usuarios</h1>
 
-    <form id="PrincipalRegistro" action="/Registro" method="post">
+    <form id="PrincipalRegistro">
         <label for="nombre">Nombre:</label>
         <input class="inputForm" type="text" name="nombre" id="nombre" required><br>
 
@@ -28,8 +31,9 @@
 </body>
 
 <footer>
-    <script src="jquery/jquery.min.js"></script>
-    <script src="js/SesionValidaciones.js"></script>
+
+    <script src="/jquery/jquery.min.js"></script>
+    <script src="/js/SesionValidaciones.js"></script>
 </footer>
 
 </html>

@@ -41,7 +41,6 @@ function EncriptarMensaje(mensaje, publicKeyPEM) {
 }
   
 function DesEncriptarMensaje(mensaje, privateKeyPEM) {
-    console.log(mensaje);
     return new Promise((resolve, reject) => {
         try {
             const privateKey = crypto.createPrivateKey({
@@ -108,7 +107,6 @@ function GenerarClaves() {
 }
 async function hashContraseña(contrasena) {
     const saltos = 10;
-    console.log("asad")
     const contrasenaHash = await bcrypt.hash(contrasena, saltos);
     return contrasenaHash;
 }

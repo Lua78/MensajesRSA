@@ -14,6 +14,24 @@ function CargarMensajes(id_receptor){
   });
 }
 
+$('#send-button').on('click', function () {
+  const rec = $('#userdes').val();
+  if (rec === '-1') {
+    AlertaErr('Debes seleccionar un usuario')
+    return;
+  }
+  const mess = $('#message-input').val()
+  if (mess.trim() === '') {
+    AlertaErr('Escribe algo...')
+    return;
+  }
+  $.post("/ingresar-mensaje", { receptor_id: rec, mensaje: mess }, function (response) {
+    console.log("Exitoso");
+  });
+
+  $('#message-input').val('');
+});
+
 function obtenerHoraMensaje(fechaEnvio) {
   var fecha = new Date(fechaEnvio);
   var hora = fecha.getHours();

@@ -40,7 +40,6 @@ app.post('/Registro', async (req, res) => {
 });
 
 app.get('/Login',(req,res)=>{
-  console.log(req.session.user)
   res.render('Sesion/Login');
 })
 

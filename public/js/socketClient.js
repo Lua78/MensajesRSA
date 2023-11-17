@@ -47,25 +47,32 @@ fetch("/obtener-id-usuario", {
     userId = data.id;
     socket.emit("join", { sala: userId });
     socket.on("nuevo-mensaje", (mensaje) => {
-      const horaActual = obtenerHoraMensaje(mensaje.tiempo);
-      var claseMensaje = mensaje.sala == userId ? "remitente" : "destinatario";
-      var mensajeHtml =
-        "<div class='" +
-        claseMensaje +
-        "'>" +
-        "<span class='mensaje-texto-" +
-        claseMensaje +
-        "'>" +
-        mensaje.mensaje +
-        "</span>" +
-        "<span class='mensaje-hora-" +
-        claseMensaje +
-        "'>" +
-        horaActual +
-        "</span> " +
-        "</div>";
-      mensajesContainer.append(mensajeHtml);
-      mensajesContainer.scrollTop(mensajesContainer.prop("scrollHeight"));
+      if(mensaje.sala == userId){
+        $.post("/get-decrypt", { msj:mensaje.mensaje }, function (response) {
+          console.log(response.mensajedes);
+          const horaActual = obtenerHoraMensaje(mensaje.tiempo);
+          var claseMensaje = 'destinatario';
+          var mensajeHtml =
+            "<div class='" +
+            claseMensaje +
+            "'>" +
+            "<span class='mensaje-texto-" +
+            claseMensaje +
+            "'>" +
+            response.msj +
+            "</span>" +
+            "<span class='mensaje-hora-" +
+            claseMensaje +
+            "'>" +
+            horaActual +
+            "</span> " +
+            "</div>";
+          mensajesContainer.append(mensajeHtml);
+          mensajesContainer.scrollTop(mensajesContainer.prop("scrollHeight"));
+        });
+
+      }
+
     });
   })
   .catch((error) =>

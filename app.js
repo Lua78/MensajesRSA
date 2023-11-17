@@ -95,10 +95,12 @@ app.post('/ingresar-mensaje', async (req, res) => {
     `;
     const segs = Date.now()
     io.to(remitente_id).emit('nuevo-mensaje', {
-      mensaje: mensaje,
-      sala : remitente_id,
+      mensaje: mEncriptado,
+      sala : receptor_id,
       tiempo : segs
     });
+    console.log("Insertado");
+    res.status(200).send();
   } catch (error) {
     console.error('Error al ingresar el mensaje:', error);
     res.status(500).send('Error al ingresar el mensaje');

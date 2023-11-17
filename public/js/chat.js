@@ -27,9 +27,15 @@ $('#send-button').on('click', function () {
   }
   $.post("/ingresar-mensaje", { receptor_id: rec, mensaje: mess }, function (response) {
     console.log("Exitoso");
+    var mensajeHtml = "<div class='remitente'>" + 
+    "<span class='mensaje-texto-remitente'>" + mess + "</span>" +
+    "<span class='mensaje-hora-remitente'>" + obtenerHoraMensaje(Date.now()) + "</span> " +
+    "</div>";
+    mensajesContainer.append(mensajeHtml);
+    mensajesContainer.scrollTop(mensajesContainer.prop("scrollHeight"));
+  $('#message-input').val('');
   });
 
-  $('#message-input').val('');
 });
 
 function obtenerHoraMensaje(fechaEnvio) {

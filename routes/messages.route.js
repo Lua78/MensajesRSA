@@ -63,6 +63,27 @@ app.get('/chats', async (req, res) => {
   }
   
 });
+app.post('/get-decrypt', async (req,res)=>{
+  if(req.session.user == null){
+    res.status(401).send("No autorizado..");
+  }else{
+    try {
+      const {msj} = req.body
+      
+      let Miclave = req.session.user
+      Miclave =  Miclave.clave_privada
+      MiclaveDesencriptada = await Encriptaciones.AesDecryptPass(Miclave);
+      const mensajedes = await Encriptaciones.DesEncriptarMensaje(msj,MiclaveDesencriptada);
+
+      console.log(mensajedes)
+      res.status(200).json({msj : mensajedes}) 
+    } catch (error) {
+      console.error('Error al cargar a los usuarios: ', error);
+      res.status(500).send('Error interno del servidor');
+    }
+  }
+  
+})
 app.get('/obtener-id-usuario', (req, res) => {
   if (req.session.user) {
     res.json({ id: req.session.user.id});

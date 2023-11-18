@@ -133,6 +133,7 @@ li:hover {
 }
 
 #chat-container .destinatario {
+  white-space: pre-line;
   min-width: 21%;
   display: flex;
   flex-direction: column;
@@ -143,6 +144,7 @@ li:hover {
 }
 
 #chat-container .remitente {
+  white-space: pre-line;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

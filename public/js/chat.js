@@ -6,14 +6,18 @@ function CargarMensajes(id_receptor){
       var claseMensaje = mensaje.remitente_id === response.idUsuario ? 'remitente' : 'destinatario';
       var mensajeHtml = "<div class='" + claseMensaje + "'>" + 
                          "<span class='mensaje-texto-"+claseMensaje +"'>" + mensaje.mensaje + "</span>" +
-                         "<span class='mensaje-hora-"+claseMensaje +"'>" + obtenerHoraMensaje(mensaje.fecha_envio) + "</span> " +
+                         "<span class='mensaje-hora-"+ claseMensaje +"'>" + obtenerHoraMensaje(mensaje.fecha_envio) + "</span> " +
                          "</div>";
       mensajesContainer.append(mensajeHtml);
     });
     mensajesContainer.scrollTop(mensajesContainer.prop("scrollHeight"));
   });
 }
-
+$('#message-input').on('keypress',function(e){
+  if(e.key === "Enter"){
+      $(this).val($(this).val() + '\n');
+  }
+});
 $('#send-button').on('click', function () {
   const rec = $('#userdes').val();
   if (rec === '-1') {

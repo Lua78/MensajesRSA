@@ -30,7 +30,6 @@ app.post('/Registro', async (req, res) => {
       console.log('Usuario registrado correctamente.');
       const userP = await SqlConexion.getUsuario(username)
       req.session.user =  userP
-      //req.sessionID = userP.id
       res.status(200).send('Exitoso');
     }
   } catch (error) {

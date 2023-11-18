@@ -26,13 +26,10 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('Usuario desconectado');
-
   });
   socket.on('join', (data) => {
     const { sala } = data;
     socket.join(sala);
-
-    console.log(`Usuario unido a la sala: ${sala}`);
   
   });
 
@@ -66,7 +63,6 @@ app.use((err, req, res, next) => {
 // Rutas
 app.use(messagesR)
 app.use(usersR)
-
 app.post('/ingresar-mensaje', async (req, res) => {
   try {
     const { receptor_id, mensaje } = req.body;
@@ -93,16 +89,15 @@ app.post('/ingresar-mensaje', async (req, res) => {
       @mensaje = ${mEncriptadoLocal},
       @tipo = 2
     `;
-    const segs = Date.now()
+    const segs = Date.now();
     io.to(remitente_id).emit('nuevo-mensaje', {
       mensaje: mEncriptado,
       sala : receptor_id,
+      remitente : remitente_id,
       tiempo : segs
     });
-    console.log("Insertado");
     res.status(200).send();
   } catch (error) {
-    console.error('Error al ingresar el mensaje:', error);
     res.status(500).send('Error al ingresar el mensaje');
   } finally {
     await sql.close();

@@ -3,7 +3,7 @@ const sql = require("mssql");
 const config = {
   user: "DEVUSER",
   password: "DEVUSER987*",
-  server: "UNPLAPTOP",
+  server: "DESKTOP-AIHOTLI",
   database: "MensajeriaRSA",
   options: {
     encrypt: true, 

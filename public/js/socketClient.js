@@ -1,20 +1,20 @@
 
 const socket = io();
-
+var idChat =  0
 var mensajesContainer = $("#chat-container");
 var userId = null;
 $("li").on("click", function () {
-  const id = $(this).val();
+  idChat = $(this).val();
   $("li").removeClass("lclick");
   $(this).addClass("lclick");
   $("#userdes").html($(this).text());
-  $("#userdes").val(id);
+  $("#userdes").val(idChat);
   DesconectarDeSalaAnterior();
-  ConectarSalaReceptor(id);
+  ConectarSalaReceptor(idChat);
   $("#contacts-container").toggle("collapsed");
   setTimeout(100);
   $("#toggleButton1").show();
-  CargarMensajes(id);
+  CargarMensajes(idChat);
 });
 
 function DesconectarDeSalaAnterior() {
@@ -35,8 +35,6 @@ function obtenerHoraMensaje(tiempoTranscurrido) {
   return horaA
 }
 
-
-
 // Obtener ID de usuario y unirse a su sala
 fetch("/obtener-id-usuario", {
   method: "GET",
@@ -47,7 +45,7 @@ fetch("/obtener-id-usuario", {
     userId = data.id;
     socket.emit("join", { sala: userId });
     socket.on("nuevo-mensaje", (mensaje) => {
-      if(mensaje.sala == userId){
+      if(mensaje.sala == userId && idChat!=0 && mensaje.remitente === idChat ){
         $.post("/get-decrypt", { msj:mensaje.mensaje }, function (response) {
           console.log(response.mensajedes);
           const horaActual = obtenerHoraMensaje(mensaje.tiempo);
